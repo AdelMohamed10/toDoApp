@@ -28,14 +28,19 @@ class TaskCubit extends Cubit<TaskState> {
     }
   }
 
-  void addItemToDone(int id, int value) {
-    repo.updateDone(value, id);
-    init();
-    emit(TaskStateLoaded());
-  }
+  Future<void> addItemToDone(int id, int value) async {
+  await repo.updateDone(value, id);
+  await init();
+}
 
-  void addItemToSuspended(int id) {
-    repo.updateSuspended(1, id);
-    emit(TaskStateLoaded());
-  }
+Future<void> addItemToMissed(int id, int value) async {
+  await repo.updateMissed(value, id);
+  await init();
+}
+Future<void> deleteTask(int id) async {
+  await repo.deleteTask(id);
+  await init(); // Refresh task list
+}
+
+
 }

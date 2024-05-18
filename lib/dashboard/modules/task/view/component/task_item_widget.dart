@@ -72,7 +72,7 @@ class TaskItemWidget extends StatelessWidget {
                   )
                 ],
               ),
-              Divider(
+              const Divider(
                 thickness: 0.5,
               ),
 
@@ -81,45 +81,56 @@ class TaskItemWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   ///like
-                  InkWell(
-                    child: taskModel.done == 1
-                        ? const Icon(
-                            CupertinoIcons.check_mark_circled_solid,
-                            color: Colors.blue,
-                          )
-                        : const Icon(
-                            CupertinoIcons.check_mark_circled,
-                            color: Colors.blue,
-                          ),
-                    onTap: () {
-                      if (taskModel.done == 1) {
-                        controller.addItemToDone(taskModel.id ?? 0, 0);
-                      } else {
-                        controller.addItemToDone(taskModel.id ?? 0, 1);
-                      }
-                    },
+                  // Icon button to mark task as done
+                InkWell(
+                  child: Icon(
+                    taskModel.done == 1 ? CupertinoIcons.check_mark_circled_solid : CupertinoIcons.check_mark_circled,
+                    color: Colors.blue,
                   ),
-
-                  ///divider
+                  onTap: () {
+                    if (taskModel.done == 1) {
+                      controller.addItemToDone(taskModel.id ?? 0, 0);
+                    } else {
+                      controller.addItemToDone(taskModel.id ?? 0, 1);
+                    }
+                  },
+                ),
+                ///divider
                   Container(
                     height: 30,
-                    width: 0.5,
+                    width: 0.33,
                     color: Colors.grey,
                   ),
 
-                  ///cart
-                  InkWell(
-                    child: taskModel.suspended == 1
-                        ? const Icon(
-                            CupertinoIcons.stop_circle_fill,
-                            color: Colors.greenAccent,
-                          )
-                        : const Icon(
-                            CupertinoIcons.stop_circle,
-                            color: Colors.greenAccent,
-                          ),
-                    onTap: () {},
+                // Icon button to mark task as missed
+                InkWell(
+                  child: Icon(
+                    taskModel.missed == 1 ? CupertinoIcons.clear_circled_solid : CupertinoIcons.clear_circled,
+                    color: Colors.blue,
                   ),
+                  onTap: () {
+                    if (taskModel.missed == 1) {
+                      controller.addItemToMissed(taskModel.id ?? 0, 0);
+                    } else {
+                      controller.addItemToMissed(taskModel.id ?? 0, 1);
+                    }
+                  },
+                ),
+                Container(
+                    height: 30,
+                    width: 0.33,
+                    color: Colors.grey,
+                  ),
+                // Icon button to delete task
+                InkWell(
+                  child: const Icon(
+                    Icons.delete,
+                    color: Colors.blue,
+                  ),
+                  onTap: () {
+                    controller.deleteTask(taskModel.id ?? 0);
+                  },
+                ),
                 ],
               )
             ],

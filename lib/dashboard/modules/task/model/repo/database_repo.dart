@@ -2,17 +2,14 @@ import 'dart:developer';
 import 'dart:typed_data';
 import 'package:commerce_project/dashboard/modules/task/model/entity_model/task_model.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:sqflite_common_ffi/sqflite_ffi.dart';
-import 'package:sqflite_common_ffi_web/sqflite_ffi_web.dart';
 
 class DatabaseRepo {
   late Database myObjectDB;
 
   Future<void> initDB() async {
-    // databaseFactory = databaseFactoryFfiWeb;
     myObjectDB = await openDatabase(
       (await getDatabasesPath()) + '/taskDB.db',
-      version: 1,
+      version: 2, // Increment version for migration
       onCreate: (db, version) async {
         await db.execute('''
           CREATE TABLE task (
@@ -23,8 +20,14 @@ class DatabaseRepo {
             times INTEGER,
             availableTimes INTEGER,
             done INTEGER,
-            suspended INTEGER
+            missed INTEGER
           )''');
+      },
+      onUpgrade: (db, oldVersion, newVersion) async {
+        if (oldVersion < 2) {
+          await db.execute('ALTER TABLE task ADD COLUMN missed INTEGER DEFAULT 0');
+        }
+        // Add future migrations here
       },
     );
   }
@@ -41,11 +44,16 @@ class DatabaseRepo {
         .toList();
   }
 
-  Future<List<TaskModel>> fetchSuspendedTasks() async {
-    log('Fetching suspended tasks');
-    return (await myObjectDB.query('task', where: 'suspended=?', whereArgs: [1]))
-        .map((e) => TaskModel.fromJson(e))
-        .toList();
+  Future<List<TaskModel>> fetchMissedTasks() async {
+    try {
+      log('Fetching missed tasks');
+      final tasks = await myObjectDB.query('task', where: 'missed = ?', whereArgs: [1]);
+      return tasks.map((e) => TaskModel.fromJson(e)).toList();
+    } catch (e) {
+      log('Error fetching missed tasks: $e');
+      // Handle the error (e.g., return an empty list or rethrow the exception).
+      return [];
+    }
   }
 
   Future<void> insertTask(String name, String desc, int times, int availableTimes, Uint8List image) async {
@@ -57,7 +65,7 @@ class DatabaseRepo {
       'availableTimes': availableTimes,
       'image': image,
       'done': 0,
-      'suspended': 0,
+      'missed': 0,
     });
   }
 
@@ -71,11 +79,11 @@ class DatabaseRepo {
     );
   }
 
-  void updateSuspended(int value, int id) {
-    log('Updating suspended status for task id: $id');
-    myObjectDB.update(
+  Future<void> updateMissed(int value, int id) async {
+    log('Updating missed status for task id: $id');
+    await myObjectDB.update(
       'task',
-      {'suspended': value},
+      {'missed': value},
       where: 'id=?',
       whereArgs: [id],
     );
@@ -91,8 +99,15 @@ class DatabaseRepo {
     );
   }
 
-  void deleteTask(int id) {
+  Future<void> deleteTask(int id) async {
     log('Deleting task with id: $id');
-    myObjectDB.delete('task', where: 'id=?', whereArgs: [id]);
+    await myObjectDB.delete('task', where: 'id=?', whereArgs: [id]);
+  }
+
+  // Method to delete the database and reinitialize it
+  Future<void> deleteAndReinitializeDB() async {
+    String path = (await getDatabasesPath()) + '/taskDB.db';
+    await deleteDatabase(path);
+    await initDB();
   }
 }

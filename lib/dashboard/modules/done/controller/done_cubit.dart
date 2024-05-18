@@ -33,9 +33,14 @@ class DoneCubit extends Cubit<DoneState> {
     await TaskCubit.instance.init();
     emit(DoneStateLoaded());
   }
+  Future<void> deleteTask(int id) async {
+  await repo.deleteTask(id);
+  await init(); // Refresh task list
+}
 
-  void addItemToSuspended(int id) {
-    repo.updateSuspended(1, id);
-    emit(DoneStateLoaded());
-  }
+
+  // void addItemToSuspended(int id) {
+  //   repo.updateSuspended(1, id);
+  //   emit(DoneStateLoaded());
+  // }
 }

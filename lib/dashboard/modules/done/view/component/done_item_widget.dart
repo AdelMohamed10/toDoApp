@@ -106,16 +106,27 @@ class DoneItemWidget extends StatelessWidget {
                     color: Colors.grey,
                   ),
 
-                  // Suspend
+                  /// Delete button
                   InkWell(
-                    child: Icon(
-                      CupertinoIcons.stop_circle,
-                      color: Colors.greenAccent,
+                    child: const Icon(
+                      Icons.delete,
+                      color: Colors.red,
                     ),
                     onTap: () {
-                      controller.addItemToSuspended(taskModel.id ?? 0);
+                      controller.deleteTask(taskModel.id ?? 0);
                     },
                   ),
+
+                  // Suspend
+                  // InkWell(
+                  //   child: Icon(
+                  //     CupertinoIcons.stop_circle,
+                  //     color: Colors.greenAccent,
+                  //   ),
+                  //   onTap: () {
+                  //     controller.addItemToSuspended(taskModel.id ?? 0);
+                  //   },
+                  // ),
                 ],
               ),
             ],

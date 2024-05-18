@@ -1,6 +1,7 @@
 
 import 'package:commerce_project/dashboard/cubit/dashboard_cubit.dart';
 import 'package:commerce_project/dashboard/modules/done/view/page/done_page.dart';
+import 'package:commerce_project/dashboard/modules/missed/view/page/missed_page.dart';
 import 'package:commerce_project/dashboard/modules/task/view/page/task_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -32,7 +33,7 @@ class DashboardPage extends StatelessWidget {
               children: const [
                 TaskPage(),
                 DonePage(),
-                Text('suspended'),
+                MissedPage(),
               ],
             ),
             bottomNavigationBar: BottomNavigationBar(
@@ -42,7 +43,7 @@ class DashboardPage extends StatelessWidget {
               items: const [
                 BottomNavigationBarItem(icon: Icon(CupertinoIcons.collections), label: 'task'),
                 BottomNavigationBarItem(icon: Icon(CupertinoIcons.check_mark_circled), label: 'done'),
-                BottomNavigationBarItem(icon: Icon(CupertinoIcons.stop_circle), label: 'suspended')
+                BottomNavigationBarItem(icon: Icon(CupertinoIcons.clear_circled), label: 'missed')
               ],
             ),
           );
