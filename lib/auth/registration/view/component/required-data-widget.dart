@@ -16,161 +16,134 @@ class _RequiredDataWidgetState extends State<RequiredDataWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final scaleFactor = MediaQuery.of(context).textScaleFactor;
+
     return Form(
       key: widget.controller.formKey,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                "Welcome to ToDoList App",
-                style: TextStyle(
-                  fontSize: 35,
-                  fontWeight: FontWeight.bold,
-                ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+            Text(
+              "Welcome to ToDoList App",
+              style: TextStyle(
+                fontSize: 35 * scaleFactor,
+                fontWeight: FontWeight.bold,
               ),
-            ],
-          ),
-          const SizedBox(height: 60),
-          const Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                "Sign up Page",
-                style: TextStyle(
-                  fontSize: 25,
-                  fontWeight: FontWeight.bold,
-                ),
+              textAlign: TextAlign.center,
+            ),
+            SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+            Text(
+              "Sign up Page",
+              style: TextStyle(
+                fontSize: 25 * scaleFactor,
+                fontWeight: FontWeight.bold,
               ),
-            ],
-          ),
-          const SizedBox(height: 25),
-          TextFormField(
-            autovalidateMode: AutovalidateMode.onUserInteraction,
-            controller: widget.controller.firstNameController,
-            keyboardType: TextInputType.name,
-            validator: MyValidation().nameValidate,
-            decoration: InputDecoration(
+              textAlign: TextAlign.center,
+            ),
+            SizedBox(height: MediaQuery.of(context).size.height * 0.03),
+            buildTextFormField(
+              context,
+              controller: widget.controller.firstNameController,
               labelText: 'First Name',
-              prefixIcon: const Icon(Icons.person),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(30),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(
-                  color: Theme.of(context).primaryColor,
-                  width: 2,
-                ),
-                borderRadius: BorderRadius.circular(30),
-              ),
-              errorBorder: OutlineInputBorder(
-                borderSide: const BorderSide(
-                  color: Colors.red,
-                  width: 2,
-                ),
-                borderRadius: BorderRadius.circular(30),
-              ),
+              icon: Icons.person,
+              validator: MyValidation().nameValidate,
             ),
-          ),
-          const SizedBox(height: 20),
-          TextFormField(
-            autovalidateMode: AutovalidateMode.onUserInteraction,
-            controller: widget.controller.lastNameController,
-            keyboardType: TextInputType.name,
-            validator: MyValidation().nameValidate,
-            decoration: InputDecoration(
+            SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+            buildTextFormField(
+              context,
+              controller: widget.controller.lastNameController,
               labelText: 'Last Name',
-              prefixIcon: const Icon(Icons.person),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(30),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(
-                  color: Theme.of(context).primaryColor,
-                  width: 2,
-                ),
-                borderRadius: BorderRadius.circular(30),
-              ),
-              errorBorder: OutlineInputBorder(
-                borderSide: const BorderSide(
-                  color: Colors.red,
-                  width: 2,
-                ),
-                borderRadius: BorderRadius.circular(30),
-              ),
+              icon: Icons.person,
+              validator: MyValidation().nameValidate,
             ),
-          ),
-          const SizedBox(height: 20),
-          TextFormField(
-            autovalidateMode: AutovalidateMode.onUserInteraction,
-            controller: widget.controller.mailController,
-            keyboardType: TextInputType.emailAddress,
-            validator: MyValidation().emailValidate,
-            decoration: InputDecoration(
+            SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+            buildTextFormField(
+              context,
+              controller: widget.controller.mailController,
               labelText: 'Email',
-              prefixIcon: const Icon(Icons.mail),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(30),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(
-                  color: Theme.of(context).primaryColor,
-                  width: 2,
+              icon: Icons.mail,
+              validator: MyValidation().emailValidate,
+            ),
+            SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+            TextFormField(
+              obscureText: !_passwordVisible,
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              controller: widget.controller.passwordController,
+              keyboardType: TextInputType.visiblePassword,
+              validator: MyValidation().passwordValidate,
+              decoration: InputDecoration(
+                labelText: 'Password',
+                prefixIcon: const Icon(Icons.lock),
+                suffixIcon: IconButton(
+                  icon: Icon(
+                    _passwordVisible ? Icons.visibility : Icons.visibility_off,
+                    color: Colors.grey,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      _passwordVisible = !_passwordVisible;
+                    });
+                  },
                 ),
-                borderRadius: BorderRadius.circular(30),
-              ),
-              errorBorder: OutlineInputBorder(
-                borderSide: const BorderSide(
-                  color: Colors.red,
-                  width: 2,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30),
                 ),
-                borderRadius: BorderRadius.circular(30),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: Theme.of(context).primaryColor,
+                    width: 2,
+                  ),
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                errorBorder: OutlineInputBorder(
+                  borderSide: const BorderSide(
+                    color: Colors.red,
+                    width: 2,
+                  ),
+                  borderRadius: BorderRadius.circular(30),
+                ),
               ),
             ),
+            SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget buildTextFormField(BuildContext context,
+      {required TextEditingController controller,
+      required String labelText,
+      required IconData icon,
+      required String? Function(String?)? validator}) {
+    return TextFormField(
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      controller: controller,
+      keyboardType: TextInputType.name,
+      validator: validator,
+      decoration: InputDecoration(
+        labelText: labelText,
+        prefixIcon: Icon(icon),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(30),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: Theme.of(context).primaryColor,
+            width: 2,
           ),
-          const SizedBox(height: 20),
-          TextFormField(
-            obscureText: !_passwordVisible,
-            autovalidateMode: AutovalidateMode.onUserInteraction,
-            controller: widget.controller.passwordController,
-            keyboardType: TextInputType.visiblePassword,
-            validator: MyValidation().passwordValidate,
-            decoration: InputDecoration(
-              labelText: 'Password',
-              prefixIcon: const Icon(Icons.lock),
-              suffixIcon: IconButton(
-                icon: Icon(
-                  _passwordVisible ? Icons.visibility : Icons.visibility_off,
-                  color: Colors.grey,
-                ),
-                onPressed: () {
-                  setState(() {
-                    _passwordVisible = !_passwordVisible;
-                  });
-                },
-              ),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(30),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(
-                  color: Theme.of(context).primaryColor,
-                  width: 2,
-                ),
-                borderRadius: BorderRadius.circular(30),
-              ),
-              errorBorder: OutlineInputBorder(
-                borderSide: const BorderSide(
-                  color: Colors.red,
-                  width: 2,
-                ),
-                borderRadius: BorderRadius.circular(30),
-              ),
-            ),
+          borderRadius: BorderRadius.circular(30),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderSide: const BorderSide(
+            color: Colors.red,
+            width: 2,
           ),
-        ],
+          borderRadius: BorderRadius.circular(30),
+        ),
       ),
     );
   }

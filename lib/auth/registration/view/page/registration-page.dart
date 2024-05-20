@@ -16,14 +16,18 @@ class RegistrationPage extends StatelessWidget {
           builder: (context, state) {
             final RegistrationCubit controller = context.read<RegistrationCubit>();
             return Scaffold(
-              body: RequiredDataWidget(
-                controller: controller,
+              body: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: RequiredDataWidget(controller: controller),
+                    ),
+                    SizedBox(height: MediaQuery.of(context).size.height * 0.02), // Spacer
+                  ],
+                ),
               ),
-
-              bottomNavigationBar: SizedBox(height: 100, child: BottomNav(
-                controller: controller,
-              ),
-              ),
+              bottomNavigationBar: BottomNav(controller: controller),
             );
           },
         ),

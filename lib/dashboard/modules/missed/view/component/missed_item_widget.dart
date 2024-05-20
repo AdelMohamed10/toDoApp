@@ -109,7 +109,7 @@ class MissedItemWidget extends StatelessWidget {
                   InkWell(
                     child: const Icon(
                       Icons.delete,
-                      color: Colors.red,
+                      color: Colors.blue,
                     ),
                     onTap: () {
                       controller.deleteTask(taskModel.id ?? 0);

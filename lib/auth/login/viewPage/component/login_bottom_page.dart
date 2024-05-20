@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 
 class LoginBottomNav extends StatelessWidget {
   final LoginCubit controller;
+
   LoginBottomNav({Key? key, required this.controller}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisSize: MainAxisSize.min,
       children: [
         ElevatedButton(
           onPressed: () {

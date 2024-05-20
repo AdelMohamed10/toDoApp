@@ -10,22 +10,25 @@ class TaskItemWidget extends StatelessWidget {
     required this.taskModel,
     required this.controller,
   });
+
   final TaskModel taskModel;
   final TaskCubit controller;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: DecoratedBox(
         decoration: BoxDecoration(
-            color: Colors.white,
-            border: Border.all(color: Colors.grey, width: 0.5),
-            borderRadius: BorderRadius.circular(20)),
+          color: Colors.white,
+          border: Border.all(color: Colors.grey, width: 0.5),
+          borderRadius: BorderRadius.circular(20),
+        ),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
-              ///product info
+              /// product info
               Row(
                 children: [
                   ClipRRect(
@@ -53,7 +56,11 @@ class TaskItemWidget extends StatelessWidget {
                       ),
                       Text(
                         taskModel.desc ?? 'description',
-                        style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w400, color: Colors.grey),
+                        style: const TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w400,
+                          color: Colors.grey,
+                        ),
                       ),
                     ],
                   ),
@@ -69,70 +76,80 @@ class TaskItemWidget extends StatelessWidget {
                         ),
                       ),
                     ],
-                  )
+                  ),
                 ],
               ),
               const Divider(
                 thickness: 0.5,
               ),
 
-              ///actions
+              /// actions
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  ///like
+                  /// like
                   // Icon button to mark task as done
-                InkWell(
-                  child: Icon(
-                    taskModel.done == 1 ? CupertinoIcons.check_mark_circled_solid : CupertinoIcons.check_mark_circled,
-                    color: Colors.blue,
+                  InkWell(
+                    child: Icon(
+                      taskModel.done == 1
+                          ? CupertinoIcons.check_mark_circled_solid
+                          : CupertinoIcons.check_mark_circled,
+                      color: Colors.blue,
+                    ),
+                    onTap: () {
+                      if (taskModel.done == 1) {
+                        controller.addItemToDone(taskModel.id ?? 0, 0);
+                      } else {
+                        controller.addItemToDone(taskModel.id ?? 0, 1);
+                        if (taskModel.missed == 1) {
+                          controller.addItemToMissed(taskModel.id ?? 0, 0);
+                        }
+                      }
+                    },
                   ),
-                  onTap: () {
-                    if (taskModel.done == 1) {
-                      controller.addItemToDone(taskModel.id ?? 0, 0);
-                    } else {
-                      controller.addItemToDone(taskModel.id ?? 0, 1);
-                    }
-                  },
-                ),
-                ///divider
+                  /// divider
                   Container(
                     height: 30,
                     width: 0.33,
                     color: Colors.grey,
                   ),
 
-                // Icon button to mark task as missed
-                InkWell(
-                  child: Icon(
-                    taskModel.missed == 1 ? CupertinoIcons.clear_circled_solid : CupertinoIcons.clear_circled,
-                    color: Colors.blue,
+                  // Icon button to mark task as missed
+                  InkWell(
+                    child: Icon(
+                      taskModel.missed == 1
+                          ? CupertinoIcons.clear_circled_solid
+                          : CupertinoIcons.clear_circled,
+                      color: Colors.blue,
+                    ),
+                    onTap: () {
+                      if (taskModel.missed == 1) {
+                        controller.addItemToMissed(taskModel.id ?? 0, 0);
+                      } else {
+                        controller.addItemToMissed(taskModel.id ?? 0, 1);
+                        if (taskModel.done == 1) {
+                          controller.addItemToDone(taskModel.id ?? 0, 0);
+                        }
+                      }
+                    },
                   ),
-                  onTap: () {
-                    if (taskModel.missed == 1) {
-                      controller.addItemToMissed(taskModel.id ?? 0, 0);
-                    } else {
-                      controller.addItemToMissed(taskModel.id ?? 0, 1);
-                    }
-                  },
-                ),
-                Container(
+                  Container(
                     height: 30,
                     width: 0.33,
                     color: Colors.grey,
                   ),
-                // Icon button to delete task
-                InkWell(
-                  child: const Icon(
-                    Icons.delete,
-                    color: Colors.blue,
+                  // Icon button to delete task
+                  InkWell(
+                    child: const Icon(
+                      Icons.delete,
+                      color: Colors.blue,
+                    ),
+                    onTap: () {
+                      controller.deleteTask(taskModel.id ?? 0);
+                    },
                   ),
-                  onTap: () {
-                    controller.deleteTask(taskModel.id ?? 0);
-                  },
-                ),
                 ],
-              )
+              ),
             ],
           ),
         ),

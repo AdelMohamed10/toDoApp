@@ -16,14 +16,18 @@ class ForgotPage extends StatelessWidget {
           builder: (context, state) {
             final ForgotCubit controller = context.read<ForgotCubit>();
             return Scaffold(
-              body: RequiredAuthForgotaWidget(
-                controller: controller,
+              body: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: RequiredAuthForgotaWidget(controller: controller),
+                    ),
+                    SizedBox(height: MediaQuery.of(context).size.height * 0.02), // Spacer
+                  ],
+                ),
               ),
-
-              bottomNavigationBar: SizedBox(height: 100, child: ForgotBottomNav(
-                controller: controller,
-              ),
-              ),
+              bottomNavigationBar: ForgotBottomNav(controller: controller),
             );
           },
         ),

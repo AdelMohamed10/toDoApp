@@ -16,14 +16,18 @@ class LoginPage extends StatelessWidget {
           builder: (context, state) {
             final LoginCubit controller = context.read<LoginCubit>();
             return Scaffold(
-              body: RequiredAuthDataWidget(
-                controller: controller,
+              body: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: RequiredAuthDataWidget(controller: controller),
+                    ),
+                    SizedBox(height: MediaQuery.of(context).size.height * 0.02), // Spacer
+                  ],
+                ),
               ),
-
-              bottomNavigationBar: SizedBox(height: 100, child: LoginBottomNav(
-                controller: controller,
-              ),
-              ),
+              bottomNavigationBar: LoginBottomNav(controller: controller),
             );
           },
         ),

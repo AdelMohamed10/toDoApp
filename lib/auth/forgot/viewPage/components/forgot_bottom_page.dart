@@ -8,6 +8,7 @@ class ForgotBottomNav extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisSize: MainAxisSize.min,
       children: [
         ElevatedButton(
           onPressed: () {
@@ -16,7 +17,7 @@ class ForgotBottomNav extends StatelessWidget {
           style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all(Colors.green),
           ),
-          child: const Text("submit"),
+          child: const Text("Submit"),
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,

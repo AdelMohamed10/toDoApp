@@ -8,6 +8,7 @@ class NewPasswordBottomNav extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisSize: MainAxisSize.min,
       children: [
         ElevatedButton(
           onPressed: () {
@@ -18,7 +19,6 @@ class NewPasswordBottomNav extends StatelessWidget {
           ),
           child: const Text("Reset"),
         ),
-        
       ],
     );
   }

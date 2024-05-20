@@ -41,9 +41,9 @@ class DashboardPage extends StatelessWidget {
               currentIndex: cubit.currentIndex,
               onTap: cubit.onChangeTab,
               items: const [
-                BottomNavigationBarItem(icon: Icon(CupertinoIcons.collections), label: 'task'),
-                BottomNavigationBarItem(icon: Icon(CupertinoIcons.check_mark_circled), label: 'done'),
-                BottomNavigationBarItem(icon: Icon(CupertinoIcons.clear_circled), label: 'missed')
+                BottomNavigationBarItem(icon: Icon(CupertinoIcons.collections), label: 'Task'),
+                BottomNavigationBarItem(icon: Icon(CupertinoIcons.check_mark_circled), label: 'Done'),
+                BottomNavigationBarItem(icon: Icon(CupertinoIcons.clear_circled), label: 'Missed')
               ],
             ),
           );

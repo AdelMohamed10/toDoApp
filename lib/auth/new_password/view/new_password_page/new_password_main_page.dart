@@ -16,13 +16,19 @@ class NewPasswordPage extends StatelessWidget {
           builder: (context, state) {
             final NewPasswordCubit controller = context.read<NewPasswordCubit>();
             return Scaffold(
-              body: RequiredAuthPassWidget(
-                controller: controller,
+              body: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: RequiredAuthPassWidget(controller: controller),
+                    ),
+                  ],
+                ),
               ),
-
-              bottomNavigationBar: SizedBox(height: 100, child: NewPasswordBottomNav(
-                controller: controller,
-              ),
+              bottomNavigationBar: Padding(
+                padding: const EdgeInsets.only(bottom: 10.0), // Adjusted padding
+                child: NewPasswordBottomNav(controller: controller),
               ),
             );
           },

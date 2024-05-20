@@ -1,6 +1,7 @@
 import 'package:commerce_project/auth/forgot/viewPage/forgot_page/forgot_main_page.dart';
 import 'package:commerce_project/auth/login/viewPage/login_page/login_main_page.dart';
 import 'package:commerce_project/auth/new_password/view/new_password_page/new_password_main_page.dart';
+import 'package:commerce_project/auth/onboarding/view/page/onboarding_page.dart';
 import 'package:commerce_project/auth/registration/view/page/registration-page.dart';
 import 'package:commerce_project/auth/verification/view/page/verification_page.dart';
 import 'package:commerce_project/dashboard/modules/new_task/view/page/new_task_page.dart';
@@ -29,7 +30,7 @@ class MyRoute {
       case 'new_task':
         return MaterialPageRoute(builder: (_) => const NewTaskPage());
       default:
-        return MaterialPageRoute(builder: (_) => const DashboardPage());
+        return MaterialPageRoute(builder: (_) => const OnBoardingPage());
     }
   }
 }

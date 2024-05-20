@@ -9,93 +9,72 @@ class RequiredAuthForgotaWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-     return Form(
-      key: controller.formKey,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-        // Spacer(flex: 1,),
+    final scaleFactor = MediaQuery.of(context).textScaleFactor;
 
-        const Row(
+    return Form(
+      key: controller.formKey,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+        child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-
+            SizedBox(height: MediaQuery.of(context).size.height * 0.05),
             Text(
               "Welcome to ToDoList App",
               style: TextStyle(
-                fontSize: 35,
+                fontSize: 35 * scaleFactor,
                 fontWeight: FontWeight.bold,
               ),
+              textAlign: TextAlign.center,
             ),
-          ],
-        ),
-        SizedBox(height: 120,),
-
-        const Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-
+            SizedBox(height: MediaQuery.of(context).size.height * 0.05),
             Text(
               "Type your email here",
               style: TextStyle(
-                fontSize: 25,
+                fontSize: 25 * scaleFactor,
                 fontWeight: FontWeight.bold,
               ),
+              textAlign: TextAlign.center,
             ),
+            SizedBox(height: MediaQuery.of(context).size.height * 0.03),
+            TextFormField(
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              controller: controller.mailController,
+              keyboardType: TextInputType.emailAddress,
+              validator: MyValidation().emailValidate,
+              decoration: InputDecoration(
+                label: const Text('Email'),
+                floatingLabelAlignment: FloatingLabelAlignment.center,
+                floatingLabelBehavior: FloatingLabelBehavior.always,
+                hintText: "example@gmail.com",
+                prefixIcon: const Icon(Icons.mail),
+                border: OutlineInputBorder(
+                  borderSide: const BorderSide(
+                    color: Color.fromARGB(255, 63, 51, 114),
+                    width: 2,
+                  ),
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: const BorderSide(
+                    color: Color.fromARGB(255, 82, 164, 57),
+                    width: 2,
+                  ),
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                errorBorder: OutlineInputBorder(
+                  borderSide: const BorderSide(
+                    color: Color.fromARGB(255, 213, 30, 30),
+                    width: 2,
+                  ),
+                  borderRadius: BorderRadius.circular(30),
+                ),
+              ),
+            ),
+            SizedBox(height: MediaQuery.of(context).size.height * 0.05),
           ],
         ),
-        // Spacer(flex: 1,),
-        SizedBox(height: 40,),
-          TextFormField(
-            autovalidateMode: AutovalidateMode.onUserInteraction,
-            controller: controller.mailController,
-            keyboardType: TextInputType.name,
-            validator: MyValidation().emailValidate,
-            decoration: InputDecoration(
-              label: const Text('mail'),
-              floatingLabelAlignment: FloatingLabelAlignment.center,
-              floatingLabelBehavior: FloatingLabelBehavior.always,
-              hintText: "example@gmail.com",
-              prefixIcon: const Icon(Icons.mail),
-              border: OutlineInputBorder(
-                borderSide: const BorderSide(
-                  color: Color.fromARGB(255, 63, 51, 114),
-                  width: 2
-                ),
-                borderRadius: BorderRadius.circular(30)
-              ),
-      
-                
-              
-                focusedBorder: OutlineInputBorder(
-                borderSide: const BorderSide(
-                  color: Color.fromARGB(255, 82, 164, 57),
-                  width: 2
-                ),
-                borderRadius: BorderRadius.circular(30)
-              ),
-                errorBorder: OutlineInputBorder(
-                borderSide: const BorderSide(
-                  color: Color.fromARGB(255, 213, 30, 30),
-                  width: 2
-                ),
-      
-                
-                borderRadius: BorderRadius.circular(30)
-              )
-            ),
-              
-          ),
-          const SizedBox(
-            height: 50,
-          ),
-        
-        ],
-      
       ),
     );
   }
-// ),
-// ),
-// );
 }
