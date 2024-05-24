@@ -4,11 +4,12 @@ import 'package:commerce_project/core/cubit/global_cubit.dart';
 import 'package:commerce_project/core/cubit/global_state.dart';
 import 'package:commerce_project/core/routing/my_route.dart';
 import 'package:commerce_project/core/my_theme.dart' as my_theme;
+import 'package:commerce_project/dashboard/modules/task/controller/user_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-Future<void> main() async {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
 
@@ -16,19 +17,13 @@ Future<void> main() async {
 
   // Determine which page to show based on the onboarding status
   Widget initialPage = onBoarding ? const RegistrationPage() : const OnBoardingPage();
-  MaterialApp materialApp = MaterialApp(
-    debugShowCheckedModeBanner: false,
-    // home: DashboardPage(),
-    onGenerateInitialRoutes: (_) => [MaterialPageRoute(builder: (_) => initialPage)],
-    onGenerateRoute: MyRoute.onNavigateByName,
-  );
-  runApp(MyApp(materialApp: materialApp));
+  runApp(MyApp(initialPage: initialPage));
 }
 
 class MyApp extends StatelessWidget {
-  final MaterialApp materialApp;
+  final Widget initialPage;
 
-  const MyApp({Key? key, required this.materialApp}) : super(key: key);
+  const MyApp({Key? key, required this.initialPage}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -60,9 +55,10 @@ class MyApp extends StatelessWidget {
                     ),
                   ],
                 ),
-                body: materialApp,
+                body: initialPage,
               ),
             ),
+            onGenerateRoute: MyRoute.onNavigateByName,
           );
         },
       ),

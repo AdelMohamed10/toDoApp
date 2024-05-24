@@ -17,6 +17,8 @@ class _RequiredDataWidgetState extends State<RequiredDataWidget> {
   @override
   Widget build(BuildContext context) {
     final scaleFactor = MediaQuery.of(context).textScaleFactor;
+    final ThemeData theme = Theme.of(context);
+    final bool isLightMode = theme.brightness == Brightness.light;
 
     return Form(
       key: widget.controller.formKey,
@@ -31,6 +33,7 @@ class _RequiredDataWidgetState extends State<RequiredDataWidget> {
               style: TextStyle(
                 fontSize: 35 * scaleFactor,
                 fontWeight: FontWeight.bold,
+                color: isLightMode ? Colors.black : Colors.white,
               ),
               textAlign: TextAlign.center,
             ),
@@ -40,6 +43,7 @@ class _RequiredDataWidgetState extends State<RequiredDataWidget> {
               style: TextStyle(
                 fontSize: 25 * scaleFactor,
                 fontWeight: FontWeight.bold,
+                color: isLightMode ? Colors.black : Colors.white,
               ),
               textAlign: TextAlign.center,
             ),
@@ -93,7 +97,7 @@ class _RequiredDataWidgetState extends State<RequiredDataWidget> {
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderSide: BorderSide(
-                    color: Theme.of(context).primaryColor,
+                    color: theme.primaryColor,
                     width: 2,
                   ),
                   borderRadius: BorderRadius.circular(30),

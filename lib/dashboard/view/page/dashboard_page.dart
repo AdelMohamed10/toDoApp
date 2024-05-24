@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class DashboardPage extends StatelessWidget {
-  const DashboardPage({super.key});
+  const DashboardPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,10 +21,12 @@ class DashboardPage extends StatelessWidget {
             appBar: AppBar(
               actions: [
                 IconButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, 'new_task');
-                    },
-                    icon: const Icon(CupertinoIcons.plus))
+                  onPressed: () {
+                    final userId = 1;
+                    Navigator.pushNamed(context, 'new_task', arguments: userId);
+                  },
+                  icon: const Icon(CupertinoIcons.plus),
+                )
               ],
             ),
             body: PageView(

@@ -1,10 +1,19 @@
+// import 'package:meta/meta.dart';
 part of 'task_cubit.dart';
 
 @immutable
-sealed class TaskState {}
+abstract class TaskState {}
 
-final class TaskStateLoading extends TaskState {}
+class TaskStateLoading extends TaskState {}
 
-final class TaskStateLoaded extends TaskState {}
+class TaskStateLoaded extends TaskState {}
 
-final class TaskStateEmpty extends TaskState {}
+class TaskStateEmpty extends TaskState {}
+
+class TaskCreationSuccess extends TaskState {}
+
+class TaskCreationError extends TaskState {
+  final String errorMessage;
+
+  TaskCreationError({required this.errorMessage});
+}
